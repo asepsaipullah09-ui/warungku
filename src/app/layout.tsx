@@ -47,16 +47,16 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <div className="flex min-h-screen">
+      <Sidebar />
 
-      <div className="flex flex-1 max-w-7xl w-full mx-auto">
-        <Sidebar />
+      <div className="flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
+        <Header />
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 md:pb-8 w-full max-w-full overflow-x-hidden">
+        <main className="w-full max-w-full flex-1 overflow-x-hidden px-4 py-5 pb-24 sm:px-6 lg:px-10 lg:py-8 md:pb-8">
           <LayoutActionsProvider
             value={{
-              openAddTx: openAddTx,
+              openAddTx,
               openAddSavings: () => setIsAddSavingsOpen(true),
               openDailyClose: () => setIsDailyCloseOpen(true),
             }}
