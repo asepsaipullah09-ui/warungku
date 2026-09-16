@@ -10,6 +10,7 @@ import { BottomNav } from '@/components/layout/BottomNav';
 import { AddTransactionModal } from '@/components/modal/AddTransactionModal';
 import { AddSavingsModal } from '@/components/modal/AddSavingsModal';
 import { DailyCloseModal } from '@/components/modal/DailyCloseModal';
+import { LayoutActionsProvider } from '@/context/LayoutActionsContext';
 import { TransactionType } from '@/types';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -53,11 +54,15 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         <Sidebar />
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 md:pb-8 w-full max-w-full overflow-x-hidden">
-          {React.cloneElement(children as React.ReactElement<any>, {
-            onOpenAddTx: openAddTx,
-            onOpenAddSavings: () => setIsAddSavingsOpen(true),
-            onOpenDailyClose: () => setIsDailyCloseOpen(true),
-          })}
+          <LayoutActionsProvider
+            value={{
+              openAddTx: openAddTx,
+              openAddSavings: () => setIsAddSavingsOpen(true),
+              openDailyClose: () => setIsDailyCloseOpen(true),
+            }}
+          >
+            {children}
+          </LayoutActionsProvider>
         </main>
       </div>
 

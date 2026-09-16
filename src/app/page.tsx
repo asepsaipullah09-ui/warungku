@@ -17,23 +17,13 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useWarung } from '@/context/WarungContext';
+import { useLayoutActions } from '@/context/LayoutActionsContext';
 import { MetricCard } from '@/components/dashboard/MetricCard';
 import { TodaySummary } from '@/components/dashboard/TodaySummary';
 import { formatDate, formatRupiah, formatTime } from '@/lib/utils';
-import { TransactionType } from '@/types';
-
-interface PageProps {
-  onOpenAddTx?: (type: TransactionType) => void;
-  onOpenAddSavings?: () => void;
-  onOpenDailyClose?: () => void;
-}
-
-export default function DashboardPage({
-  onOpenAddTx,
-  onOpenAddSavings,
-  onOpenDailyClose,
-}: PageProps) {
+export default function DashboardPage() {
   const { metrics, transactions, isLoaded } = useWarung();
+  const { openAddTx, openAddSavings, openDailyClose } = useLayoutActions();
 
   if (!isLoaded) {
     return (
@@ -62,7 +52,7 @@ export default function DashboardPage({
 
         <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
-            onClick={() => onOpenAddTx?.('penjualan')}
+            onClick={() => openAddTx('penjualan')}
             className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 py-2.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-600/20 transition-all"
           >
             <PlusCircle className="w-4 h-4" />
@@ -70,7 +60,7 @@ export default function DashboardPage({
           </button>
 
           <button
-            onClick={() => onOpenAddTx?.('pengeluaran')}
+            onClick={() => openAddTx('pengeluaran')}
             className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 py-2.5 px-4 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-rose-600/20 transition-all"
           >
             <MinusCircle className="w-4 h-4" />
@@ -78,7 +68,7 @@ export default function DashboardPage({
           </button>
 
           <button
-            onClick={() => onOpenAddSavings?.()}
+            onClick={openAddSavings}
             className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-indigo-600/20 transition-all"
           >
             <PiggyBank className="w-4 h-4" />
@@ -86,7 +76,7 @@ export default function DashboardPage({
           </button>
 
           <button
-            onClick={() => onOpenDailyClose?.()}
+            onClick={openDailyClose}
             className="flex-1 sm:flex-initial flex items-center justify-center space-x-2 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-slate-900/20 transition-all"
           >
             <Moon className="w-4 h-4 text-amber-400" />
@@ -288,7 +278,7 @@ export default function DashboardPage({
 
             <div className="relative z-10 pt-4">
               <button
-                onClick={() => onOpenDailyClose?.()}
+                onClick={openDailyClose}
                 className="py-2.5 px-5 bg-white text-teal-900 hover:bg-teal-50 font-extrabold text-xs rounded-xl shadow-lg transition-transform active:scale-95 flex items-center space-x-2"
               >
                 <span>Lakukan Tutup Hari</span>

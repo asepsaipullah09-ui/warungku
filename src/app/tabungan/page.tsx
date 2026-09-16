@@ -3,14 +3,12 @@
 import React from 'react';
 import { PiggyBank, PlusCircle, Sparkles, History, ShieldCheck } from 'lucide-react';
 import { useWarung } from '@/context/WarungContext';
+import { useLayoutActions } from '@/context/LayoutActionsContext';
 import { formatDate, formatRupiah, formatTime } from '@/lib/utils';
 
-interface PageProps {
-  onOpenAddSavings?: () => void;
-}
-
-export default function TabunganPage({ onOpenAddSavings }: PageProps) {
+export default function TabunganPage() {
   const { savingsHistory, metrics, isLoaded } = useWarung();
+  const { openAddSavings } = useLayoutActions();
 
   if (!isLoaded) {
     return (
@@ -34,7 +32,7 @@ export default function TabunganPage({ onOpenAddSavings }: PageProps) {
         </div>
 
         <button
-          onClick={onOpenAddSavings}
+          onClick={openAddSavings}
           className="flex items-center justify-center space-x-2 py-3 px-5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-200 transition-all self-start sm:self-auto"
         >
           <PlusCircle className="w-4 h-4" />

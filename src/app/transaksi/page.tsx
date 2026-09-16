@@ -3,15 +3,12 @@
 import React, { useState, useMemo } from 'react';
 import { Search, PlusCircle, Trash2, ArrowUpRight, ArrowDownRight, Tag } from 'lucide-react';
 import { useWarung } from '@/context/WarungContext';
+import { useLayoutActions } from '@/context/LayoutActionsContext';
 import { formatDate, formatTime, formatRupiah, isToday, isSameDay } from '@/lib/utils';
-import { TransactionType, ExpenseCategory } from '@/types';
 
-interface PageProps {
-  onOpenAddTx?: (type: TransactionType) => void;
-}
-
-export default function TransaksiPage({ onOpenAddTx }: PageProps) {
+export default function TransaksiPage() {
   const { transactions, deleteTransaction, isLoaded } = useWarung();
+  const { openAddTx } = useLayoutActions();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState<string>('semua');
@@ -81,7 +78,7 @@ export default function TransaksiPage({ onOpenAddTx }: PageProps) {
         </div>
 
         <button
-          onClick={() => onOpenAddTx?.('penjualan')}
+          onClick={() => openAddTx('penjualan')}
           className="flex items-center justify-center space-x-2 py-3 px-5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-200 transition-all self-start sm:self-auto"
         >
           <PlusCircle className="w-4 h-4" />
